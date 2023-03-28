@@ -63,9 +63,14 @@ describe("getProductById", () => {
     }
   });
 
-  it("Should return an object matching productExample", async () => {
-    const result = await api.getProductById(2);
+  it("Should return an object with keys matching productKeys", async () => {
+    const result = await api.getProductById(1);
     expect(Object.keys(result).sort()).toEqual(productKeys);
+  });
+
+  it("Should return an object with id key matching the given id", async () => {
+    const result = await api.getProductById(1);
+    expect(result.id).toBe(1);
   });
 });
 
@@ -81,7 +86,6 @@ describe("getAllCategories", () => {
   });
 });
 
-// ----------------------------------------------------------------------------------
 describe("getAllProductsInCategory", () => {
   it("Should return all products from the given category", async () => {
     const categoryToFind = "electronics";
@@ -91,7 +95,7 @@ describe("getAllProductsInCategory", () => {
     });
   });
 
-  it("Should throw if category name does not exist", async () => {
+  it("Should return an empty array if category does not exist", async () => {
     const categoryToFind = "xxxxxxxxxxxx";
     const result = await api.getAllProductsInCategory(categoryToFind);
     expect(result).toEqual([]);
